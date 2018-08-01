@@ -8,7 +8,7 @@ var emotionsArray = []
     $("#buttonsDiv").empty();
     for (var i = 0; i < emotionsArray.length; i++) {
       var button = $("<button>");
-      button.addClass("emotionClass");
+      button.addClass("emotionButton");
       button.attr("data-name", emotionsArray[i]);
       button.text(emotionsArray[i]);
       $("#buttonsDiv").append(button);
@@ -29,7 +29,7 @@ $(document).ready(function() {
 
 
   // when emotion buttons are clicked, return gifs
-  $("button").on("click", function() {
+  $(document).on("click", ".emotionButton", function() {
     var emotion = $(this).attr("data-emotion");
 
     // Constructing a queryURL using emotion
