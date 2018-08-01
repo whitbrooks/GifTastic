@@ -9,6 +9,7 @@ var emotionsArray = []
     for (var i = 0; i < emotionsArray.length; i++) {
       var button = $("<button>");
       button.addClass("emotionButton");
+      button.addClass("btn btn-outline-secondary");
       button.attr("data-name", emotionsArray[i]);
       button.text(emotionsArray[i]);
       $("#buttonsDiv").append(button);

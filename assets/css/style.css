@@ -1,4 +1,18 @@
+h1 {
+    font-family: 'Kirang Haerang', cursive;
+    font-size: 60px;
+    color: #ea5f2d;
+}
+
 body {
     margin: 60px;
-    justify-content: center;
+}
+
+.emotionButton {
+    margin: 0px 5px 5px 0px;
+}
+
+#gif {
+    clear: both;
+    float: left;
 }
