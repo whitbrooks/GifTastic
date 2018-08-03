@@ -4,24 +4,24 @@ var emotionsArray = []
 
 // FUNCTIONS
 
-  function renderButtons() {
-    $("#buttonsDiv").empty();
-    for (var i = 0; i < emotionsArray.length; i++) {
-      var button = $("<button>");
-      button.addClass("emotionButton");
-      button.addClass("btn btn-outline-secondary");
-      button.attr("data-name", emotionsArray[i]);
-      button.text(emotionsArray[i]);
-      $("#buttonsDiv").append(button);
-      }
+function renderButtons() {
+  $("#buttonsDiv").empty();
+  for (var i = 0; i < emotionsArray.length; i++) {
+    var button = $("<button>");
+    button.addClass("emotionButton");
+    button.addClass("btn btn-outline-secondary");
+    button.attr("data-name", emotionsArray[i]);
+    button.text(emotionsArray[i]);
+    $("#buttonsDiv").append(button);
   }
+}
 
-// RUN PROGRAM
+// RUN
 
-$(document).ready(function() {
-  
+$(document).ready(function () {
+
   // input new emotions and create buttons
-  $("#add-emotion").on("click", function(event) {
+  $("#add-emotion").on("click", function (event) {
     event.preventDefault();
     var input = $("#emotion-input").val().trim();
     emotionsArray.push(input);
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 
   // when emotion buttons are clicked, return gifs
-  $(document).on("click", ".emotionButton", function() {
+  $(document).on("click", ".emotionButton", function () {
     var emotion = $(this).attr("data-name");
 
     // Constructing a queryURL using emotion
@@ -43,9 +43,9 @@ $(document).ready(function() {
       method: "GET"
     })
       // After data comes back from the request
-      .then(function(response) {
+      .then(function (response) {
         console.log(response);
-        
+
         // storing the data from the AJAX request in the results variable
         var results = response.data;
 
@@ -67,33 +67,30 @@ $(document).ready(function() {
           image.attr("data-animate", results[i].images.fixed_height.url);
           image.attr("data-state", "still");
           console.log(image)
-          
+
           // Appending the paragraph and image tag to the emotionDiv
           emotionDiv.append(image);
+          // on click function
+          image.on("click", function () {
+            // Getting the value of data-state attribute
+            var state = $(this).attr("data-state");
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+            if (state === "still") {
+              $(this).attr("src", $(this).attr("data-animate"));
+              $(this).attr("data-state", "animate");
+            } else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
+            }
+          })
           emotionDiv.append(p);
-            
+
           // Prependng the emotionDiv to the HTML page in the "#gifs-appear-here" div
           $("#gifs-appear-here").prepend(emotionDiv);
+
         }
-
-        $(".gif").on("click", function() {
-          // Getting the value of data-state attribute
-          var state = $(this).attr("data-state");
-          // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-          // Then, set the image's data-state to animate
-          // Else set src to the data-still value
-          if (state === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this).attr("data-state", "animate");
-          } else {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still");
-          }
-        });
-
-      });
-
-        
-    });
-
-});
+      })
+  })
+})
